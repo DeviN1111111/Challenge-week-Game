@@ -30,14 +30,16 @@ def is_choice_valid(picked_choice:str,total_choices:int):#->bool?():
     if int(picked_choice) >= 1 and int(picked_choice) <= total_choices:
         return True
     else:
-        return False
-        
+       return loop_till_correct_input(total_choices)
     
 
-# def input_error(valid):
-#     while not valid:
-#         print('Input Error')
-#         return False
+        
+    
+def loop_till_correct_input(choices:int):
+    print("Input error")
+    return is_choice_valid(input(), choices)
+    
+    
     
     
 
