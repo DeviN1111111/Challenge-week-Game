@@ -90,10 +90,12 @@ def combat(enemy:str):
             if enemy["health"] > 0:    
                 player_stats["health"] -= enemy["damage"]
                 typewriter(f"The {enemy_highlight(enemy_name)} hits you for {dmg_highlight(enemy['damage'])} {dmg_highlight("damage")}.")
-                typewriter(f"Your {hp_highlight("health")} is now {hp_highlight(player_stats['health'])}.")
-            if player_stats["health"] <= 0:
-                typewriter("You died")
-                break 
+                if(player_stats["health"] > 0 ):
+                    typewriter(f"Your {hp_highlight("health")} is now {hp_highlight(player_stats['health'])}.")
+                else:
+                    typewriter(f"Your {hp_highlight("health")} is now {hp_highlight("0.")}")
+                    typewriter(f"{hp_highlight("YOU DIED!")}")
+                    break 
     else:
         typewriter(f"ERROR Enemy typo of je begint je gevecht met 0 of minder HP")
         

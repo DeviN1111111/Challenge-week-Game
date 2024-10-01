@@ -1,9 +1,9 @@
 import random
 
-time_sleep = [0,0]
+time_sleep = [0.05,0.01]
 
 weapons = [
-    {"name": "Fist", "damage": 20},
+    {"name": "Fist", "damage": 5},
     {"name": "Dagger", "damage": 20},
     {"name": "Bow", "damage": 40}
 ]
@@ -15,7 +15,7 @@ player_stats = {
 }
 
 enemy_stats = {
-    "Zombie": {"damage": 5, "health": 50},
-    "Skeleton": {"damage": 7, "health": 40},
-    "Vampire": {"damage": 10, "health": 60}
+    "Zombie": {"damage": 7, "health": 50},
+    "Skeleton": {"damage": 12, "health": 60},
+    "Vampire": {"damage": 10, "health": 90}
 }
