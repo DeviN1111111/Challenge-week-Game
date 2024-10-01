@@ -38,6 +38,8 @@ Your hands shake as you ready your weapon. It's time to fight. Will your alchemy
     
 def level_two():
     print()
+    typewriter("Since you defeated the zombie I will grant you with 3 health potions! use /heal to use them!")
+    add_inventory_value("Damage potion", 3)
     typewriter('''With the zombie defeated, a grim realization settles in—there are more dangers ahead.
 But your wife's illness pushes you forward, into the unknown.''')
     print()

@@ -1,7 +1,6 @@
 from functions import *
 from levels import *
 
-give_player_weapon("Fist")
 
 def gameloop():
     while True:

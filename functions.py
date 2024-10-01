@@ -225,9 +225,11 @@ def check_inventory_value(item_name:str): #you can use this function to see the 
         if item["name"] == item_name:
             return item["value"]
         
-def add_inventory_value(item_name:str, item_amount:int): #you can use this function to add an item to a player eg add_inventory_value("Healing potion", 3) adds 3 healing potions
+def add_inventory_value(item_name:str, item_amount:int):#you can use this function to add an item to a player eg add_inventory_value("Healing potion", 3) adds 3 healing potions
     for item in player_inventory:
         if item["name"] == item_name:
-            item["value"] += item_amount
+            item["amount"] += item_amount
+            typewriter(f"Added {item_amount} of {item_name} to your inventory" )
+            print(check_inventory_amount("Damage potion"))
             return
     
