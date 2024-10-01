@@ -37,12 +37,14 @@ Your hands shake as you ready your weapon. It's time to fight. Will your alchemy
 def level_two():
     print()
     typewriter('''With the zombie defeated, a grim realization settles in—there are more dangers ahead.
-But your wife's illness pushes you forward, into the unknown''')
+But your wife's illness pushes you forward, into the unknown.''')
+    print()
     time.sleep(1)
     typewriter('''As you look around, two buildings catch your eye.
 1. The Bakery, Its door hangs loosely on the hinges, and the smell of stale flour still lingers in the air.
 Could there be food or supplies left behind?
 2. The Smithy, there could be some useful equipment of use laying around''')
+    print()
     level_choice = valid_input("Which way do you go?  ", 2)
     if level_choice == '1':
         bakery()
@@ -50,9 +52,23 @@ Could there be food or supplies left behind?
         smithy()
 
 
-def bakery():
-    print('bakery')
+def bakery():#a key and potential encounter
+    print(f'''Inside the bakery, shelves are bare, and dust covers everything.
+Searching deeper, you find a {item_highlight('rusted key')} hidden under a pile of old sacks.
+In the storage room there isn't much of anything. However a large wooden crate sits in the corner, untouched.''')
+    print()
+    answer = is_yesno_valid("Do you open the crate? ")
+    if answer == 'Yes':
+        print('placeholder')
+        #encounter hier
+    elif answer == 'No':
+        typewriter('You leave the bakery')
+        level_three()
 
 
-def smithy():
+def smithy():#a new weapon and an encounter
     print('smithy')
+
+
+def level_three():
+    print('placeholder level three')
