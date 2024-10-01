@@ -16,10 +16,13 @@ def main_menu()->str:
         Welcome to placeholder
         made by Devin & Lucio
 ========================================
-    placeholder story intro
-          
-
-
+In a world overrun by plague and creatures of darkness, your wife lies gravely ill. 
+As a skilled alchemist, you alone have the knowledge to craft a cure,
+but the rare ingredients you need are scattered across a dying, perilous land.
+Armed with potions and desperation, you must venture beyond the safety of your lab
+into forgotten ruins, haunted forests, and crumbling villages.
+Time is running out. Will you find the cure before it's too late?
+Or will the horrors of this shattered world consume you?
 ========================================
     Enter '1' to start the game.
     Enter '2' to quit.
@@ -47,9 +50,16 @@ def is_name_valid(prompt: str)-> str:
     if name.isalpha() and len(name) <= 10:
         return name
     else:
-        print("ERROR: Invalid input.")
+        print("ERROR: Invalid input. Please enter letters only.")
         return is_name_valid(prompt)
     
 
 def level_one():
-    typewriter()
+    typewriter('''
+As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
+The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
+With your satchel of alchemical supplies strapped tight, you head towards the town square, knowing the first ingredient lies somewhere within the village.
+But you don't make it far before a chilling sound stops you in your tracks.
+A shambling figure emerges from behind a broken cart—its skin gray, eyes lifeless. It stumbles toward you, hunger in its eyes. 
+You've read about these creatures, but now you face one, alone.
+Your hands shake as you ready your weapon. It's time to fight. Will your alchemy save you?''')

@@ -15,7 +15,7 @@ def gameloop():
             typewriter('''
 placeholder intro text
 ''')
-            
+            level_one()
             
             
     
