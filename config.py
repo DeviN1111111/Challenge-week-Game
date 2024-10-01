@@ -1,6 +1,6 @@
 import random
 
-time_sleep = [0.02,0.01]
+time_sleep = [0.002,0.001]
 
 weapons = [
     {"name": "Fist", "damage": 5},

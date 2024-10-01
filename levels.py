@@ -5,7 +5,7 @@ from functions import *
 
 
 def main_menu()->str:
-    return'''
+    print('''
 ========================================
         Welcome to placeholder
         made by Devin & Lucio
@@ -20,11 +20,11 @@ Or will the horrors of this shattered world consume you?
 ========================================
     Enter '1' to start the game.
     Enter '2' to quit.
-========================================'''
+========================================''')
+    reset_game()
 
 
 def level_one():
-    player_reset()
     typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.

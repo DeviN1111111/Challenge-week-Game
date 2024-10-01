@@ -82,15 +82,15 @@ def give_player_weapon(weapon_name:str):
 def combat(enemy:str):
     if enemy in enemy_stats and player_stats["health"] > 0:
         enemy_name = enemy
+        combatEnemy = enemy #had to make another variable so i can send the enemy name to the damage pot combat function
         enemy = enemy_stats[enemy]
         player_weapon = player_stats["weapon"]
         enemy_hp_reset = enemy["health"]
-        value_of_damage_potion = check_inventory_value("Damage potion")
+
         
         typewriter(f"You encountered a {enemy_highlight(enemy_name)} he has {hp_highlight(enemy["health"])} {hp_highlight("health")} and you have {hp_highlight(player_stats["health"])} {hp_highlight("health")}!")
         
         while player_stats["health"] > 0 and enemy["health"] > 0:
-            amount_of_damage_potions = check_inventory_amount("Damage potion")
             enemy["health"] -= player_weapon["damage"]
             typewriter(f"{player_stats["name"]} hit the {enemy_highlight(enemy_name)} for {dmg_highlight(player_weapon['damage'])} {dmg_highlight("damage")}.")
                 
@@ -109,31 +109,61 @@ def combat(enemy:str):
                     typewriter(f"Your {hp_highlight("health")} is now {hp_highlight("0.")}")
                     typewriter(f"{hp_highlight("YOU DIED!")}")
                     break 
-                
-            if amount_of_damage_potions > 0:
-                user_input = is_yesno_valid(f"Do you want to use a damage potion? You have {amount_of_damage_potions} damage potions left!")
-                if user_input.lower() == "yes":
-                    for item in player_inventory:
-                        if item["name"] == "Damage potion":
-                            item["amount"] -= 1
-                    if enemy["health"] <= value_of_damage_potion:
-                        enemy["health"] -=  value_of_damage_potion
-                        typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
-                        typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now 0.")
-                    else:
-                        enemy["health"] -=  value_of_damage_potion
-                        typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
-                        typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now {hp_highlight(enemy['health'])}.")
-                else:
-                    typewriter("no damage pot used")
+            damage_pot_combat(combatEnemy)
 
     else:
         typewriter(f"ERROR Enemy typo of je begint je gevecht met 0 of minder HP")
         
     
+    
+def damage_pot_combat(enemy:str):
+    enemy_name = enemy
+    enemy = enemy_stats[enemy]
+    player_weapon = player_stats["weapon"]
+    value_of_damage_potion = check_inventory_value("Damage potion")
+    amount_of_damage_potions = check_inventory_amount("Damage potion")
+    enemy_hp_reset = enemy["health"]
+    enemy["health"] -= player_weapon["damage"]
+    
+    if amount_of_damage_potions > 0:
+        user_input = is_yesno_valid(f"Do you want to use a damage potion? You have {amount_of_damage_potions} damage potions left!")
+        if user_input.lower() == "yes":
+            for item in player_inventory:
+                if item["name"] == "Damage potion":
+                    item["amount"] -= 1
+            if enemy["health"] <= value_of_damage_potion:
+                enemy["health"] -=  value_of_damage_potion
+                typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now 0.")
+                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight("died")}.")
+                enemy["health"] = enemy_hp_reset
+            else:
+                enemy["health"] -=  value_of_damage_potion
+                typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now {hp_highlight(enemy['health'])}.")
+        else:
+            typewriter("no damage pot used")
+        
 def player_reset():
     player_stats["health"] = 100
     give_player_weapon("Fist")
+
+def enemy_reset(enemy_name, new_health):
+    if enemy_name in enemy_stats:
+        enemy_stats[enemy_name]['health'] = new_health
+    else:
+        print(f"Enemy '{enemy_name}' not found.")
+        
+def set_inventory_amounts_to_zero(inventory):
+    for item in inventory:
+        item['amount'] = 0  
+        
+def reset_game():
+    player_reset()
+    set_inventory_amounts_to_zero(player_inventory)
+    enemy_reset("Skeleton", 60)
+    enemy_reset("Vampire", 90)
+    enemy_reset("Zombie", 50)
     
 def use_healing_potion():
     for item in player_inventory:

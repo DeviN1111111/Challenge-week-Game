@@ -5,7 +5,7 @@ give_player_weapon("Fist")
 
 def gameloop():
     while True:
-        print(main_menu())
+        main_menu()
         menu_choice = valid_input("Enter your choice here: ", 2)
         if menu_choice == '2':
             typewriter("Game shutting down...")
