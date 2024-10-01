@@ -1,6 +1,6 @@
 import random
 
-time_sleep = [0.05,0.01]
+time_sleep = [0.02,0.01]
 
 weapons = [
     {"name": "Fist", "damage": 5},
@@ -19,3 +19,8 @@ enemy_stats = {
     "Skeleton": {"damage": 12, "health": 60},
     "Vampire": {"damage": 10, "health": 90}
 }
+
+player_inventory = [
+    {"name": "Healing potion", "amount": 1, "value": 50},
+    {"name": "Damage potion", "amount": 1, "value": 19}
+]
