@@ -1,6 +1,8 @@
 from functions import *
 from levels import *
 
+give_player_weapon("Fist")
+
 def gameloop():
     while True:
         print(main_menu())
@@ -14,9 +16,9 @@ def gameloop():
             typewriter(f"Welcome {name}.")
             time.sleep(1)
             typewriter('''
-placeholder intro text
-''')
+placeholder intro text''')
             level_one()
+            time.sleep(1)
             level_two()
             
             
