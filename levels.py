@@ -1,6 +1,6 @@
 import time
 import random
-from config import time_sleep
+from config import *
 from functions import *
 
 
@@ -24,6 +24,7 @@ Or will the horrors of this shattered world consume you?
 
 
 def level_one():
+    player_reset()
     typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
@@ -32,6 +33,7 @@ But you don't make it far before a chilling sound stops you in your tracks.
 A shambling figure emerges from behind a broken cart—its skin gray, eyes lifeless. It stumbles toward you, hunger in its eyes. 
 You've read about these creatures, but now you face one, alone.
 Your hands shake as you ready your weapon. It's time to fight. Will your alchemy save you?''')
+    combat('Zombie')
 
     
 def level_two():
@@ -53,7 +55,7 @@ Could there be food or supplies left behind?
 
 
 def bakery():#a key and potential encounter
-    print(f'''Inside the bakery, shelves are bare, and dust covers everything.
+    typewriter(f'''Inside the bakery, shelves are bare, and dust covers everything.
 Searching deeper, you find a {item_highlight('rusted key')} hidden under a pile of old sacks.
 In the storage room there isn't much of anything. However a large wooden crate sits in the corner, untouched.''')
     print()
@@ -67,7 +69,7 @@ In the storage room there isn't much of anything. However a large wooden crate s
 
 
 def smithy():#a new weapon and an encounter
-    print('smithy')
+    combat("Skeleton")
 
 
 def level_three():

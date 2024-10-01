@@ -1,4 +1,6 @@
-time_sleep = [0, 0]
+import random
+
+time_sleep = [0,0]
 
 weapons = [
     {"name": "Fist", "damage": 20},
@@ -13,7 +15,7 @@ player_stats = {
 }
 
 enemy_stats = {
-    "Zombie": {"damage": 50, "health": 50},
+    "Zombie": {"damage": 5, "health": 50},
     "Skeleton": {"damage": 7, "health": 40},
     "Vampire": {"damage": 10, "health": 60}
 }
