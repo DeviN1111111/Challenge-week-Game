@@ -62,9 +62,10 @@ In the storage room there isn't much of anything. However a large wooden crate s
     answer = is_yesno_valid("Do you open the crate? ")
     if answer == 'Yes':
         print('placeholder')
-        #encounter hier
+        combat('Skeleton')
+        level_three()
     elif answer == 'No':
-        typewriter('You leave the bakery')
+        typewriter('You leave the bakery empty handed')
         level_three()
 
 
