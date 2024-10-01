@@ -1,4 +1,5 @@
 from functions import *
+from levels import *
 
 def gameloop():
     while True:
@@ -16,6 +17,7 @@ def gameloop():
 placeholder intro text
 ''')
             level_one()
+            level_two()
             
             
     
