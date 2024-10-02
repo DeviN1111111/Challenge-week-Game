@@ -88,26 +88,27 @@ def combat(enemy:str):
         enemy_hp_reset = enemy["health"]
 
         
-        typewriter(f"You encountered a {enemy_highlight(enemy_name)} he has {hp_highlight(enemy["health"])} {hp_highlight("health")} and you have {hp_highlight(player_stats["health"])} {hp_highlight("health")}!")
+        typewriter(f"You encountered a {enemy_highlight(enemy_name)}! He has {hp_highlight(enemy['health'])} {hp_highlight('health')} and you have {hp_highlight(player_stats['health'])} {hp_highlight('health')}!")
+
         
         while player_stats["health"] > 0 and enemy["health"] > 0:
             enemy["health"] -= player_weapon["damage"]
-            typewriter(f"{player_stats["name"]} hit the {enemy_highlight(enemy_name)} for {dmg_highlight(player_weapon['damage'])} {dmg_highlight("damage")}.")
+            typewriter(f"{player_stats['name']} hit the {enemy_highlight(enemy_name)} for {dmg_highlight(player_weapon['damage'])} {dmg_highlight('damage')}.")
                 
             if enemy["health"] > 0:
-                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now {hp_highlight(enemy['health'])}.")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
             else:
-                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight("0 health")} he died")
+                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} he died")
                 enemy["health"] = enemy_hp_reset
                 return
             if enemy["health"] > 0:    
                 player_stats["health"] -= enemy["damage"]
-                typewriter(f"The {enemy_highlight(enemy_name)} hits you for {dmg_highlight(enemy['damage'])} {dmg_highlight("damage")}.")
+                typewriter(f"The {enemy_highlight(enemy_name)} hits you for {dmg_highlight(enemy['damage'])} {dmg_highlight('damage')}.")
                 if(player_stats["health"] > 0 ):
-                    typewriter(f"Your {hp_highlight("health")} is now {hp_highlight(player_stats['health'])}.")
+                    typewriter(f"Your {hp_highlight('health')} is now {hp_highlight(player_stats['health'])}.")
                 else:
-                    typewriter(f"Your {hp_highlight("health")} is now {hp_highlight("0.")}")
-                    typewriter(f"{hp_highlight("YOU DIED!")}")
+                    typewriter(f"Your {hp_highlight('health')} is now {hp_highlight('0.')}")
+                    typewriter(f"{hp_highlight('YOU DIED!')}")
                     break 
             damage_pot_combat(combatEnemy)
 
@@ -134,13 +135,13 @@ def damage_pot_combat(enemy:str):
             if enemy["health"] <= value_of_damage_potion:
                 enemy["health"] -=  value_of_damage_potion
                 typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
-                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now 0.")
-                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight("died")}.")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now 0.")
+                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('died')}.")
                 enemy["health"] = enemy_hp_reset
             else:
                 enemy["health"] -=  value_of_damage_potion
                 typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
-                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight("health")} is now {hp_highlight(enemy['health'])}.")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
         else:
             typewriter("no damage pot used")
         
@@ -172,7 +173,7 @@ def use_healing_potion():
                 if player_stats["health"] <= 50: #Healing does 50 this makes sure u dont heal over 100 health
                     item["amount"] -= 1
                     player_stats["health"] += item["amount_of_healing"]
-                    typewriter(f"You healed for 50 health you now have {player_stats["health"]} health and have {item['amount']} healing potions left")
+                    typewriter(f"You healed for 50 health you now have {player_stats['health']} health and have {item['amount']} healing potions left")
                 elif player_stats["health"] >= 50 and player_stats["health"] < 100:
                     item["amount"] -= 1
                     player_stats["health"] = 100 #If you are over 50 hp you would heal to over 100 hp this makes sure u only heal to 100
@@ -211,7 +212,7 @@ def show_help():
     
 def print_inventory():
     for item in player_inventory:
-        print(f"- {item["name"]} amount: {item["amount"]}")
+        print(f"- {item['name']} amount: {item['amount']}")
     print("") 
     
     
