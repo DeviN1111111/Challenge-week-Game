@@ -69,6 +69,10 @@ def hp_highlight(text: str):#red
 def dmg_highlight(text: str):#bright-red
     return f"\033[91m{text}\033[0m"
 
+
+def pot_highlight(text: str):#purple
+    return f"\033[35m{text}\033[0m"
+
 #combat stats
 def give_player_weapon(weapon_name:str):
     for weapon in weapons:
@@ -98,7 +102,7 @@ def combat(enemy:str):
             if enemy["health"] > 0:
                 typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
             else:
-                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} he died")
+                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} it died")
                 enemy["health"] = enemy_hp_reset
                 return
             if enemy["health"] > 0:    
@@ -108,7 +112,7 @@ def combat(enemy:str):
                     typewriter(f"Your {hp_highlight('health')} is now {hp_highlight(player_stats['health'])}.")
                 else:
                     typewriter(f"Your {hp_highlight('health')} is now {hp_highlight('0.')}")
-                    typewriter(f"{hp_highlight('YOU DIED!')}")
+                    typewriter(f"{hp_highlight('YOU DIED! RESETTING GAME')}")
                     break 
             damage_pot_combat(combatEnemy)
 
@@ -127,20 +131,20 @@ def damage_pot_combat(enemy:str):
     enemy["health"] -= player_weapon["damage"]
     
     if amount_of_damage_potions > 0:
-        user_input = is_yesno_valid(f"Do you want to use a damage potion? You have {amount_of_damage_potions} damage potions left!")
+        user_input = is_yesno_valid(f"Do you want to use a {pot_highlight('damage potion')}? You have {pot_highlight(amount_of_damage_potions)} {pot_highlight('damage potions')} left! ")
         if user_input.lower() == "yes":
             for item in player_inventory:
                 if item["name"] == "Damage potion":
                     item["amount"] -= 1
             if enemy["health"] <= value_of_damage_potion:
                 enemy["health"] -=  value_of_damage_potion
-                typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
-                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now 0.")
+                typewriter(f"Your {pot_highlight('damage potion')} hit the {enemy_highlight(enemy_name)} right on! it did {dmg_highlight(value_of_damage_potion)} {dmg_highlight('damage')}!")
+                typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight('0')}.")
                 typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('died')}.")
                 enemy["health"] = enemy_hp_reset
             else:
                 enemy["health"] -=  value_of_damage_potion
-                typewriter(f"Your damage potion hit the {enemy_name} right on! it did {value_of_damage_potion} damage")
+                typewriter(f"Your {pot_highlight('damage potion')} hit the {enemy_name} right on! it did {value_of_damage_potion} {dmg_highlight('damage')}")
                 typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
         else:
             typewriter("no damage pot used")
@@ -192,7 +196,6 @@ def input_commands(command):
         print_inventory()
     else:
         typewriter("Invalid command type /help for help.")
-        return
     
     
 def show_help():
@@ -207,12 +210,13 @@ def show_help():
 
     Type a command to execute it. Have fun exploring!
     """
-    typewriter(help_text)
+    print(help_text)
     
     
 def print_inventory():
     for item in player_inventory:
-        print(f"- {item['name']} amount: {item['amount']}")
+        print(f"- {item['name']}, Amount: {item['amount']}")
+    print(f"- Melee: {player_stats['weapon']['name']}, Damage: {player_stats['weapon']['damage']}")
     print("") 
     
     
@@ -231,6 +235,7 @@ def add_inventory_value(item_name:str, item_amount:int):#you can use this functi
         if item["name"] == item_name:
             item["amount"] += item_amount
             typewriter(f"Added {item_amount} of {item_name} to your inventory" )
-            print(check_inventory_amount("Damage potion"))
-            return
-    
+
+
+def add_item_to_inventory(name: str, amount: int, value: int): #Name is the name of the item Amount is how many of the item you get, and value is the value the item does for damage or other things (Value could be 0 for keys or other items without damage)
+    player_inventory.append({"name": name, "amount": amount, "value": value})

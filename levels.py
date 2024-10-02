@@ -60,6 +60,7 @@ def bakery():#a key and potential encounter
     typewriter(f'''Inside the bakery, shelves are bare, and dust covers everything.
 Searching deeper, you find a {item_highlight('rusted key')} hidden under a pile of old sacks.
 In the storage room there isn't much of anything. However a large wooden crate sits in the corner, untouched.''')
+    add_item_to_inventory("Rusted Key", 1, 0)
     print()
     answer = is_yesno_valid("Do you open the crate? ")
     if answer == 'Yes':
@@ -72,7 +73,12 @@ In the storage room there isn't much of anything. However a large wooden crate s
 
 
 def smithy():#a new weapon and an encounter
-    combat("Skeleton")
+    typewriter("smithy story dead skeleton new dagger etc")
+    answer = is_yesno_valid("Do you pick up the dagger from the Skeleton? ")
+    if answer == 'Yes':
+        give_player_weapon("Dagger")
+        typewriter("As you pick up the weapon, the body starts moving... The skeleton starts attacking!")
+        combat("Skeleton")
 
 
 def level_three():
