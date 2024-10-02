@@ -22,7 +22,8 @@ placeholder intro text''')#hier moet nog n kleine intro komen die verdiept op de
             level_one()
             time.sleep(1)
             level_two()
-            
+            level_three()
+            level_four()
             
             
     

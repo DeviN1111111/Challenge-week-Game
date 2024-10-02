@@ -34,14 +34,17 @@ A shambling figure emerges from behind a broken cart—its skin gray, eyes lifel
 You've read about these creatures, but now you face one, alone.
 Your hands shake as you ready your weapon. It's time to fight. Will your alchemy save you?''')
     combat('Zombie')
+    print()
+    typewriter(f'''With the zombie defeated, a grim realization settles in—there are more dangers ahead.
+You grab {pot_highlight('3 Damage Potions')} from your pouch.
+But your wife's illness pushes you forward.''')
+    add_inventory_value("Damage potion", 3)
+    game_print(f"Added {pot_highlight_bold('3 damage potions')} to your inventory")
 
     
 def level_two():
     print()
-    typewriter("Since you defeated the zombie I will grant you with 3 health potions! use /heal to use them!")
-    add_inventory_value("Damage potion", 3)
-    typewriter('''With the zombie defeated, a grim realization settles in—there are more dangers ahead.
-But your wife's illness pushes you forward, into the unknown.''')
+    
     print()
     time.sleep(1)
     typewriter('''As you look around, two buildings catch your eye.
@@ -61,15 +64,14 @@ def bakery():#a key and potential encounter
 Searching deeper, you find a {item_highlight('rusted key')} hidden under a pile of old sacks.
 In the storage room there isn't much of anything. However a large wooden crate sits in the corner, untouched.''')
     add_item_to_inventory("Rusted Key", 1, 0)
+    game_print(f"Added {item_highlight('Rusted key')}\033[1;37m to your inventory.")
     print()
     answer = is_yesno_valid("Do you open the crate? ")
     if answer == 'Yes':
         print('placeholder')
         combat('Skeleton')
-        level_three()
     elif answer == 'No':
         typewriter('You leave the bakery empty handed')
-        level_three()
 
 
 def smithy():#a new weapon and an encounter
@@ -79,7 +81,76 @@ def smithy():#a new weapon and an encounter
         give_player_weapon("Dagger")
         typewriter("As you pick up the weapon, the body starts moving... The skeleton starts attacking!")
         combat("Skeleton")
+        typewriter("After fending off the skeleton, you head back outside\n")
+        print(end='')
+    if answer == 'No':
+        typewriter('After looking around some more, you find nothing of note and head back outside\n')
+        print(end='')
 
 
-def level_three():
-    print('placeholder level three')
+
+def level_three():#you find Mistwhisper Berries, ingredient 1
+    typewriter('''
+You recall the old apothecary near the village well and walk to the ruined building. 
+The path is eerie, lined with crumbling homes and empty streets. 
+You arrive at the overgrown building, its door creaking open to reveal dusty shelves of herbs and remedies. 
+There must be some ingredients I can use inside.
+''')
+    time.sleep(1)
+    typewriter('''As you enter the old ruined apothecary you have a look around. 
+Two plants catch your eye, but which one do you need?
+You decide to search for clues.''')
+    print('''Where do you want to look?
+1. closet
+2. chest
+3. drawers''')
+    room_check = True
+    while room_check:
+        room_choice = valid_input("Enter your choice: ", 3)
+        if room_choice == '1':#closet
+            print('You find nothing')
+        if room_choice == '2':#chest
+            print('You find nothing')
+        if room_choice == '3':#drawers
+            room_check = False
+            typewriter("As you sift through the clutter in the dim light of the apothecary's hut,\nyour fingers brush against a worn notebook, its pages yellowed with age,\nrevealing the secrets of healing and the dangers lurking within the herbs.\n(Type /logbook to read)")
+            add_desc_to_logbook('''The plant with soft, vibrant leaves emits a faint, warm glow in the sunlight,
+hinting at its restorative properties.
+In contrast, the one with dark, twisted stems and jagged edges thrives in the shadows;
+its appearance is alluring but deceptive, bringing misfortune to the unwary.''')
+    typewriter('''You return to the clearing where you first spotted the plants.
+               
+1. The first plant stands tall with vibrant green leaves and soft blue petals,\nemanating a sweet aroma that hints at its healing properties.
+
+2. The second plant sprawls low to the ground,\nits twisted gray leaves and dark flowers exuding an unsettling energy.
+
+With the apothecary's notebook in hand, you weigh your choices carefully.''')
+    flower_choice = valid_input("Enter your choice: ", 2)
+    if flower_choice == '1':
+        add_item_to_inventory("Sylvan Heartflower", 1, 0)
+        typewriter("You have picked up the Sylvan Heartflower and added it to your inventory")
+    if flower_choice == '2':
+        add_item_to_inventory("Shadowbane Blossom", 1, 0)
+        typewriter("You have picked up the Shadowbane Blossom and added it to your inventory")
+
+
+def level_four():#town hall, resting point, chest for the key, find shortsword
+    typewriter('''You enter the town hall after leaving apothecary
+you have a look around and find a chest''')
+    chest_choice = is_yesno_valid('Do you try opening the chest? ')
+    if chest_choice == 'Yes':
+        if check_inventory_amount("Rusted Key"):
+            print(f"You open the chest and find a {item_highlight('Shortsword')}! ")
+            give_player_weapon("Shortsword")
+            game_print(f"Added {item_highlight_bold('Shortsword')} to your inventory.")
+        else:
+            print("The chest seems to be locked and it can not be opened.")
+    if chest_choice == 'No':
+        print("You do not try opening the chest.\n ")
+    townh_choice = is_yesno_valid('Do you take this moment to rest up? ')
+    if townh_choice == 'Yes':
+        print(' you rest up and heal')
+        # player_stats("health") += 50
+        # game_print("You have restored 50 health. (If you want to heal more, use /heal)")
+    if townh_choice == 'No':
+        print('you dont')
