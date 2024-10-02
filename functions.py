@@ -2,7 +2,7 @@ import time
 import random
 from config import *
 
-
+#alternative prints
 def typewriter(str):
     for letter in str: 
         time.sleep(random.uniform(time_sleep[0], time_sleep[1]))
@@ -82,7 +82,7 @@ def pot_highlight(text: str):#purple
     return f"\033[35m{text}\033[0m"
 
 
-def pot_highlight_bold(text: str):#purple->bold
+def pot_highlight_bold(text: str):#purple -> bold
     return f"\033[35m{text}\033[1;37m"
 
 
@@ -191,16 +191,17 @@ def use_healing_potion():
                 if player_stats["health"] <= 50: #Healing does 50 this makes sure u dont heal over 100 health
                     item["amount"] -= 1
                     player_stats["health"] += item["amount_of_healing"]
-                    typewriter(f"You healed for 50 health you now have {player_stats['health']} health and have {item['amount']} healing potions left")
+                    typewriter(f"You healed for 50 health you now have {player_stats['health']} health and have {item['amount']} healing potions left.")
                 elif player_stats["health"] >= 50 and player_stats["health"] < 100:
                     item["amount"] -= 1
                     player_stats["health"] = 100 #If you are over 50 hp you would heal to over 100 hp this makes sure u only heal to 100
-                    typewriter(f"You healed to 100 hp. and have {item['amount']} healing potions left")
+                    typewriter(f"You healed to 100 hp. and have {item['amount']} healing potions left.")
                 else:
-                    typewriter(f"You are already full hp! you have {item['amount']} healing potions left")
+                    typewriter(f"You are already full hp! you have {item['amount']} healing potions left.")
             else:
-                typewriter("You have no healing potions")
-                
+                typewriter("You don't have any healing potions.")
+
+#'/' commands                
 def input_commands(command): 
     if command.lower() == "/heal":
         use_healing_potion()
@@ -231,7 +232,7 @@ def show_help():
     """
     typewriter(help_text)
     
-    
+#inventory things
 def print_inventory():
     for item in player_inventory:
         print(f"- {item['name']}, Amount: {item['amount']}")

@@ -18,7 +18,7 @@ def gameloop():
             typewriter(f"Welcome {name}.")
             time.sleep(1)
             typewriter('''
-placeholder intro text''')#hier moet nog n kleine intro komen die verdiept op de intro text van de main menu
+placeholder intro text''')#hier moet nog n kleine intro komen die verdiept op de intro text van de main menu en de commands uit legt
             level_one()
             time.sleep(1)
             level_two()
