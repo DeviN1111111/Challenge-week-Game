@@ -17,7 +17,8 @@ player_stats = {
 enemy_stats = {
     "Zombie": {"damage": 5, "health": 50},
     "Skeleton": {"damage": 12, "health": 60},
-    "Vampire": {"damage": 10, "health": 90}
+    "Vampire": {"damage": 10, "health": 90},
+    "Crystal Golem": {"damage": 15,"health": 100}
 }
 
 player_inventory = [

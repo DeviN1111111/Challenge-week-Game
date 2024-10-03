@@ -153,16 +153,16 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
 
     if townh_choice == 'Yes':
         print('You decide to take a moment to rest up.\n')
-        player_stats["health"] += 25
+        player_stats["health"] += 35
         time.sleep(1)
-        game_print(f"You have restored 25 health. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
+        game_print(f"You have restored 35 health. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
         print("\nAfter resting for a moment, you look around and,", end='')
 
     if townh_choice == 'No':
         print('You decide not to rest and look around.\n')
         time.sleep(1)
         print(f"While looking around, you find a {pot_highlight('healing potion')} hidden behind a shelf!\n")
-        add_item_to_inventory("Healing Potion", 1, 0)
+        add_item_to_inventory("Healing potion", 1, 50)
         inv_add_print("Healing potion", "Purple")
         print()
         time.sleep(1)
@@ -189,7 +189,7 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
 
 
 def level_five():
-    os.system('cls')
-    #enter dungeon, check surroundings, move forwards, 
+    #enter dungeon, check surroundings, find more healing potions or upgrade dmg with new gloves, merge at golem, either fight or stealth it. 
     print("Without warning, the floor collapses under your feet.\nWith a gasp, you fall into the darkness below, landing with a hard thud in a cold, damp chamber.\nYou're in a dungeon... and there's no going back.")
-    input('lvl 5')
+    upgrade_weapon(5)
+    combat('Zombie')

@@ -106,6 +106,13 @@ def give_player_weapon(weapon_name:str):
     print(f"Weapon {weapon_name} not found.")
 
 
+def upgrade_weapon(amount:int):
+    current_weapon = player_stats["weapon"]
+    for weapon in weapons:
+        if weapon["name"] == current_weapon:
+            weapon["damage"] += amount
+
+
 def combat(enemy:str):
     if enemy in enemy_stats and player_stats["health"] > 0:
         enemy_name = enemy
@@ -242,7 +249,8 @@ def show_help():
 #inventory things
 def print_inventory():
     for item in player_inventory:
-        print(f"- {item['name']}, Amount: {item['amount']}")
+        if item["amount"] > 0:
+            print(f"- {item['name']}, Amount: {item['amount']}")
     print(f"- Melee: {player_stats['weapon']['name']}, Damage: {player_stats['weapon']['damage']}")
     print("") 
     
