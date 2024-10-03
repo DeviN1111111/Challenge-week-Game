@@ -3,9 +3,10 @@ from levels import *
 
 
 def gameloop():
+
     while True:
         main_menu()
-        menu_choice = valid_input("Enter your choice here: ", 2)
+        menu_choice = is_number_valid("Enter your choice here: ", 2)
         if menu_choice == '2':
             typewriter("Game shutting down...")
             break
@@ -25,6 +26,8 @@ placeholder intro text''')#hier moet nog n kleine intro komen die verdiept op de
             level_three()
             level_four()
             level_five()
+            level_six()
+            level_seven()
             
     
     

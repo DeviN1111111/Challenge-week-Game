@@ -22,10 +22,12 @@ enemy_stats = {
 }
 
 player_inventory = [
-    {"name": "Healing potion", "amount": 1, "value": 50},
-    {"name": "Damage potion", "amount": 1, "value": 25}
+    {"name": "Healing potion", "amount": 0, "value": 50},
+    {"name": "Damage potion", "amount": 0, "value": 25}
 ]
 
 player_logbook = {
     "Logbook": {"description": "no description"}
 }
+
+ingredient_order = []

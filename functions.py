@@ -21,21 +21,21 @@ def inv_add_print(item: str, colour: str)-> str:
         print(f"\033[1;37mAdded \033[35m{item}\033[1;37m to your inventory\033[0m")
 
 #validators
-def valid_input(prompt: str, total_choices: int)-> str:
+def is_number_valid(prompt: str, total_choices: int)-> str:
     user_input = input(prompt)
     if user_input.startswith("/"):
         input_commands(user_input)
-        return valid_input(prompt, total_choices)
+        return is_number_valid(prompt, total_choices)
     elif user_input.isdigit():
         choice = int(user_input)
         if 1 <= choice <= total_choices:
             return str(choice)
         else:
             print("ERROR: Choice out of option range.")
-            return valid_input(prompt, total_choices)
+            return is_number_valid(prompt, total_choices)
     else:
         print("ERROR: Invalid input. Please enter a number.")
-        return valid_input(prompt, total_choices)
+        return is_number_valid(prompt, total_choices)
     
 
 def is_name_valid(prompt: str)-> str:
@@ -100,7 +100,7 @@ def print_highlight(text: str):#white-bold
 def give_player_weapon(weapon_name:str):
     for weapon in weapons:
         if weapon["name"] == weapon_name:
-            player_stats["weapon"] = weapon
+            player_stats["weapon"] = weapon["name"]
             return
     
     print(f"Weapon {weapon_name} not found.")
@@ -113,19 +113,37 @@ def upgrade_weapon(amount:int):
             weapon["damage"] += amount
 
 
+def stealth(steps:int):
+    for i in range(steps):
+        if i == 0:
+            yes_or_no = is_yesno_valid("Do you want to take a step closer? ")
+        else:
+            yes_or_no = is_yesno_valid("Do you want to take another step closer? ")
+        random_number = random.randint(0, 100)
+        if random_number >= 65 and yes_or_no == "Yes":
+            typewriter("He heard you and wakes up!")
+            combat("Crystal Golem")
+            break
+        elif random_number < 65 and yes_or_no == "Yes":
+            typewriter(f"You took a step he didnt hear you, step {i + 1}/{steps}")
+            
+
+
 def combat(enemy:str):
     if enemy in enemy_stats and player_stats["health"] > 0:
         enemy_name = enemy
-        combatEnemy = enemy #had to make another variable so i can send the enemy name to the damage pot combat function
         enemy = enemy_stats[enemy]
-        player_weapon = player_stats["weapon"]
+        current_weapon = player_stats["weapon"]
         enemy_hp_reset = enemy["health"]
         value_of_damage_potion = check_inventory_value("Damage potion")
         amount_of_damage_potions = check_inventory_amount("Damage potion")
         
+        for weapon in weapons:
+            if weapon["name"] == current_weapon:
+                player_weapon = weapon
+        
         typewriter(f"You encountered a {enemy_highlight(enemy_name)}! He has {hp_highlight(enemy['health'])} {hp_highlight('health')} and you have {hp_highlight(player_stats['health'])} {hp_highlight('health')}!")
 
-        
         while player_stats["health"] > 0 and enemy["health"] > 0:
             enemy["health"] -= player_weapon["damage"]
             typewriter(f"{player_stats['name']} hit the {enemy_highlight(enemy_name)} for {dmg_highlight(player_weapon['damage'])} {dmg_highlight('damage')}.")
@@ -134,6 +152,7 @@ def combat(enemy:str):
                 typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
             else:
                 typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} it died.")
+                typewriter(f"Your {hp_highlight('health')} is {hp_highlight(player_stats['health'])}.")
                 enemy["health"] = enemy_hp_reset
                 return
             if enemy["health"] > 0:    
@@ -146,6 +165,7 @@ def combat(enemy:str):
                     typewriter(f"{hp_highlight('YOU DIED! RESETTING GAME')}")
                     break 
                 if amount_of_damage_potions > 0:
+                    amount_of_damage_potions = check_inventory_amount("Damage potion")
                     user_input = is_yesno_valid(f"Do you want to use a {pot_highlight('damage potion')}? You have {pot_highlight(amount_of_damage_potions)} {pot_highlight('damage potions')} left! ")
                     if user_input.lower() == "yes":
                         for item in player_inventory:
@@ -157,6 +177,7 @@ def combat(enemy:str):
                             typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight('0')}.")
                             typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('died')}.")
                             enemy["health"] = enemy_hp_reset
+                            typewriter(f"Your {hp_highlight('health')} is {hp_highlight(player_stats['health'])}.")
                         else:
                             enemy["health"] -=  value_of_damage_potion
                             typewriter(f"Your {pot_highlight('damage potion')} hit the {enemy_name} right on! it did {value_of_damage_potion} {dmg_highlight('damage')}")
@@ -199,19 +220,20 @@ def reset_game():
     enemy_reset("Zombie", 50)
     
 def use_healing_potion():
-    for item in player_inventory:
+        item = player_inventory[0]
+        old_hp = player_stats["health"]
         if item["name"] == "Healing potion":
-            if item["amount"] > 0:
+            if item["amount"] >= 1:
                 if player_stats["health"] <= 50: #Healing does 50 this makes sure u dont heal over 100 health
                     item["amount"] -= 1
-                    player_stats["health"] += item["amount_of_healing"]
-                    typewriter(f"You healed for 50 health you now have {player_stats['health']} health and have {item['amount']} healing potions left.")
+                    player_stats["health"] += item["value"]
+                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats["health"])} health, and you have {item['amount']} healing potions left.")
                 elif player_stats["health"] >= 50 and player_stats["health"] < 100:
                     item["amount"] -= 1
-                    player_stats["health"] = 100 #If you are over 50 hp you would heal to over 100 hp this makes sure u only heal to 100
-                    typewriter(f"You healed to 100 hp. and have {item['amount']} healing potions left.")
+                    player_stats["health"] = 100 #If you are over 50 hp you would heal to over 100 hp this makes sure u only heal to 100 
+                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats["health"])} health, and you have {item['amount']} healing potions left.")
                 else:
-                    typewriter(f"You are already full hp! you have {item['amount']} healing potions left.")
+                    typewriter(f"You are already full health! you have {item['amount']} {pot_highlight("healing potions")} left.")
             else:
                 typewriter("You don't have any healing potions.")
 
@@ -225,6 +247,8 @@ def input_commands(command):
         print_inventory()
     elif command.lower() == "/logbook":
         print_logbook()
+    elif command.lower() == "/quit":
+        quit_game()
     else:
         typewriter("Invalid command type /help for help.")
         return
@@ -242,17 +266,25 @@ def show_help():
 
     /logbook       - Show the description in your logbook
 
+    /quit          - To quit the game :(
+
     Type a command to execute it. Have fun exploring!
     """
     typewriter(help_text)
     
 #inventory things
 def print_inventory():
+    current_weapon = player_stats["weapon"]
+    for weapon in weapons:
+        if weapon["name"] == current_weapon:
+            current_weapon = weapon
+            
     for item in player_inventory:
         if item["amount"] > 0:
             print(f"- {item['name']}, Amount: {item['amount']}")
-    print(f"- Melee: {player_stats['weapon']['name']}, Damage: {player_stats['weapon']['damage']}")
+    print(f"- Melee: {player_stats['weapon']}, Damage: {current_weapon['damage']}")
     print("") 
+    
     
     
 def check_inventory_amount(item_name:str): #you can use this function to see how many of asked item you have left
@@ -281,5 +313,13 @@ def print_logbook():
     print(player_logbook['Logbook']['description'])
     print("")
 
+
 def add_desc_to_logbook(description:str):
-    player_logbook["Logbook"]['description'] = str(description) + " ------- "
+    player_logbook["Logbook"]['description'] = str(description)
+
+
+def quit_game():
+    typewriter("Game shutting down...")
+    time.sleep(1)
+    exit()
+    

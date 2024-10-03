@@ -24,7 +24,7 @@ Or will the horrors of this shattered world consume you?
 
 
 def level_one():
-    os.system('cls')
+    
     typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
@@ -47,7 +47,6 @@ With your wife's illness in your mind, you push forward.''')
 
     
 def level_two():
-    os.system('cls')
     print()
     time.sleep(1)
     typewriter('''As you look around, two buildings catch your eye.
@@ -55,7 +54,7 @@ def level_two():
    Could there be ingredients or other supplies left behind?
 2. The Smithy, could there be some useful equipment or weaponry left behind?''')
     print()
-    level_choice = valid_input("Which building do you enter?  ", 2)
+    level_choice = is_number_valid("Which building do you enter?  ", 2)
     if level_choice == '1':
         bakery()
     if level_choice == '2':
@@ -96,7 +95,6 @@ def smithy():#a new weapon and an encounter
 
 
 def level_three():#you find, ingredient 1
-    os.system('cls')
     typewriter('''
 You recall the old apothecary near the village well and walk to the ruined building. 
 The path is eerie, lined with crumbling homes and empty streets. 
@@ -113,7 +111,7 @@ You decide to search for clues.''')
 3. The drawers''')
     room_check = True
     while room_check:
-        room_choice = valid_input("Enter your choice: ", 3)
+        room_choice = is_number_valid("Enter your choice: ", 3)
         if room_choice == '1':#closet
             print('You find nothing')
         if room_choice == '2':#chest
@@ -132,7 +130,7 @@ its appearance is alluring but deceptive, bringing misfortune to the unwary.''')
 2. The second plant sprawls low to the ground,\nits twisted gray leaves and dark flowers exuding an unsettling energy.
 
 With the apothecary's logbook in hand, you weigh your choices carefully.\n(Type /logbook to read)''')
-    flower_choice = valid_input("Enter your choice: ", 2)
+    flower_choice = is_number_valid("Enter your choice: ", 2)
     if flower_choice == '1':
         add_item_to_inventory("Sylvan Heartflower", 1, 1)
         typewriter("You have picked up the first plant and stashed it away.\n")
@@ -146,7 +144,6 @@ With the apothecary's logbook in hand, you weigh your choices carefully.\n(Type 
 
 
 def level_four():#town hall, resting point, chest for the key, find shortsword
-    os.system('cls')
     typewriter('''After finding your first ingredient, you leave the apothecary and travel onwards to the Town Hall.\nOnce inside you sense a moment of calm, peace and quiet. The walls are standing steady and the windows are still barged.\nThe only way in or out is through the entrance.''')
   
     townh_choice = is_yesno_valid('Do you take this moment to rest up? ')
@@ -157,12 +154,14 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
         time.sleep(1)
         game_print(f"You have restored 35 health. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
         print("\nAfter resting for a moment, you look around and,", end='')
+        if player_stats["health"] >= 100:
+            player_stats["health"] = 100
 
     if townh_choice == 'No':
         print('You decide not to rest and look around.\n')
         time.sleep(1)
         print(f"While looking around, you find a {pot_highlight('healing potion')} hidden behind a shelf!\n")
-        add_item_to_inventory("Healing potion", 1, 50)
+        add_inventory_value("Healing potion", 1)
         inv_add_print("Healing potion", "Purple")
         print()
         time.sleep(1)
@@ -191,5 +190,108 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
 def level_five():
     #enter dungeon, check surroundings, find more healing potions or upgrade dmg with new gloves, merge at golem, either fight or stealth it. 
     print("Without warning, the floor collapses under your feet.\nWith a gasp, you fall into the darkness below, landing with a hard thud in a cold, damp chamber.\nYou're in a dungeon... and there's no going back.")
-    upgrade_weapon(5)
-    combat('Zombie')
+    typewriter('''You dust yourselff off and find yourself at a crossroads,
+two hallways stand right before you.
+1. The left passageway seems slightly more open, its walls marked with faint scratches and worn stone.             
+2. The right passageway is narrower, with jagged stones lining the floor and an eerie silence hanging in the air.
+''')
+    hallway_choice = is_number_valid('Which hallway do you enter? ', 2)
+    if hallway_choice == '1':
+        typewriter("The corridor twists and turns, leading you to a small alcove.\nThere, tucked behind an old tapestry, you find a vial shimmering faintly,\nyou recognise this as another healing potion.\n")
+        add_inventory_value("Healing potion", 1)
+        inv_add_print("Healing potion", "Purple")
+        print(f"\nAfter picking up the {pot_highlight('Healing Potion')} you continue down the hallway.")
+
+    if hallway_choice == '2':
+        typewriter("As you move down this darker passage, the sound of your footsteps echoes ominously. Eventually, you stumble upon an old display case.\nInside, you see a pair of leather gloves, worn but sturdy, faintly glowing with a magical aura that hints at their enhanced abilities.")
+        glove_pickup = is_yesno_valid("Do you pick up the gloves? ")
+        if glove_pickup == 'Yes':
+            print(f"You pick up the {item_highlight('Enchanted Gloves')}, as you put them on you feel yourself getting stronger.\n")
+            add_item_to_inventory("Enchanted Gloves", 1, 0)
+            inv_add_print("Enchanted Gloves", "Yellow")
+            upgrade_weapon(5)
+        if glove_pickup == 'No':
+            print("You leave the gloves on the ground and continue down the hallway.")
+    typewriter("The hallways merge into a vast open chamber, the air thick with ancient dust. In the center stands a massive golem,\nits body shimmering with the same crystalline glow as the shard you seek.\nThis... thing guards your next ingredient")
+    time.sleep(1)
+    typewriter('''As you approach the chamber, you notice that the creature's attention is briefly diverted. 
+1. You can either attempt to quietly slip past it and seize the shard or,
+2. Prepare for a direct confrontation with this formidable guardian. 
+The choice is yours.''')
+    golem_choice = is_number_valid("Enter your choice here: ", 2)
+    if golem_choice == '1': #stealth
+        stealth(3)
+        print('you successfully sneak up to the golem and rip off the mf gem, killing it')
+    if golem_choice == '2': #combat
+        print(f"You decide to fight the {enemy_highlight("Crystal Golem")} head on.")
+        combat("Crystal Golem")
+        add_item_to_inventory("Glimmering Shard", 1, 1)
+        inv_add_print("Glimmering Shard", 'Yellow')
+    print('now that the golem is defeated you pick up 2nd INGREDIENT and continue')
+    print("you find back exit, you enter the forest")
+
+
+def level_six():#walk through forest, find zombie, run or fight, end up at herbalists hut, find 3rd ingredient, start the travel back to lab
+    typewriter("with 2nd ingredient in hand you keep pushing, knowing youre close to making the cure for your wife. in your haste you do not notice a zombie approaching you")
+    print('1. Do you fight the zombie? or\n2. Do you run away?')
+    fight_or_flight = is_number_valid("Enter your choice here: ", 2)
+    if fight_or_flight == '1':#combat
+        print('You decide to fight the zombie')
+        combat('Zombie')
+    if fight_or_flight == '2':#run away
+        print('You decide to run away')
+    print('you make your way to the herbalists hut')
+    #npc interaction
+    print("you enter the hut and the herbalist says;")
+    typewriter(f"Ah, an alchemist! I have the ingredient you seek, but first, you must prove your wisdom by solving my riddle.\nAnswer it correctly, and the {item_highlight('Mysterious Essence')} will be yours.")
+    time.sleep(1)
+    typewriter(f"What can you make with leaves and a bit of heat, that can lift your spirits and make your day sweet?")
+    print('1. A potion\n2. A tea.\n3. A soup.\n')
+    while True:
+        riddle_choice = is_number_valid("Enter your choice here: ", 3)
+        if riddle_choice == '1':
+            print("wrong answer, try again")
+        if riddle_choice == '2':
+            print("wrong answer, try again")
+        if riddle_choice == '3':
+            print("correct!")
+            add_item_to_inventory("Mysterious Essence", 1, 1)
+            inv_add_print("Mysterious Essence", 'Yellow')
+            break
+    print("yo u leave with the last ingredient congrats")
+
+
+def level_seven():#return to lab, try to make cure, if failed; wife == boss, if success; you win game
+    print('return to the lab')
+    print('''your note says the following;
+In the dance of life, let nature weave,
+Start with whispers of green that believe.
+Next, the heart of stone, a glimmering glow,
+To anchor your hopes where the shadows grow.
+Last comes the mystery, hidden from light,
+Combine them with care, or face endless night.''')
+    #sylvan heartflower -> glimmering shard -> mysterious essence
+    print('you start brewing, but in what order to you enter the ingredients')
+    print(f'1. {item_highlight('Sylvan Heartflower')}.\n2. {item_highlight("Glimmering Shard")}.\n3. {item_highlight("Mysterious Essence")}.')
+    choices = 0
+    while choices < 3:
+      ingredient_choice = is_number_valid("Enter your choice here: ", 3)
+      if ingredient_choice == '1':
+          print("you enter the flower")
+          choices += 1
+          ingredient_order.append("Sylvan Heartflower")
+      if ingredient_choice == '2':
+          choices += 1
+          print("you enter the shard")
+          ingredient_order.append("Glimmering Shard")
+      if ingredient_choice == '3':
+          choices += 1
+          print("you enter the essence")
+          ingredient_order.append("Mysterious Essence")
+
+    if ingredient_order[0] == "Sylvan Heartflower" and ingredient_order[1] == "Glimmering Shard" and ingredient_order[2] == "Mysterious Essence":
+        print('you win!!!!')
+    else:
+        print('your potion failed')#DOESNT WORK
+
+    
