@@ -1,5 +1,4 @@
-import time
-import random
+import time, random, os
 from config import *
 from functions import *
 
@@ -25,6 +24,7 @@ Or will the horrors of this shattered world consume you?
 
 
 def level_one():
+    os.system('cls')
     typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
@@ -43,10 +43,11 @@ to prepare, you grab {pot_highlight('3 Damage potions')} from your pouch and att
 With your wife's illness in your mind, you push forward.''')
     print()
     add_inventory_value("Damage potion", 3)
-    game_print(f"Added {pot_highlight_bold('3 damage potions')} to your inventory")
+    inv_add_print("3 damage potions", "Purple")
 
     
 def level_two():
+    os.system('cls')
     print()
     time.sleep(1)
     typewriter('''As you look around, two buildings catch your eye.
@@ -54,7 +55,7 @@ def level_two():
    Could there be ingredients or other supplies left behind?
 2. The Smithy, could there be some useful equipment or weaponry left behind?''')
     print()
-    level_choice = valid_input("Which way do you go?  ", 2)
+    level_choice = valid_input("Which building do you enter?  ", 2)
     if level_choice == '1':
         bakery()
     if level_choice == '2':
@@ -67,7 +68,7 @@ Searching deeper, you find a {item_highlight('rusted key')} hidden under a pile 
 In the storage room there isn't much of anything. However a large wooden crate sits in the corner, untouched.''')
     print()
     add_item_to_inventory("Rusted Key", 1, 0)
-    game_print(f"Added {item_highlight('Rusted key')}\033[1;37m to your inventory.")
+    inv_add_print("Rusted key", "Yellow")
     print()
     answer = is_yesno_valid("Do you open the crate? ")
     if answer == 'Yes':
@@ -82,8 +83,10 @@ def smithy():#a new weapon and an encounter
     answer = is_yesno_valid("Do you pick up the dagger from the Skeleton? ")
     if answer == 'Yes':
         give_player_weapon("Dagger")
-        game_print(f"Added {item_highlight_bold('Dagger')} to your inventory.")
-        typewriter("As you pick up the weapon, the body starts moving... The skeleton starts attacking!")
+        inv_add_print("Dagger", "Yellow")
+        typewriter("As you pick up the weapon, the body starts moving...")
+        time.sleep(1)
+        typewriter("The skeleton starts attacking!")
         combat("Skeleton")
         typewriter("After fending off the skeleton, you head back outside")
         print(end='')
@@ -93,6 +96,7 @@ def smithy():#a new weapon and an encounter
 
 
 def level_three():#you find, ingredient 1
+    os.system('cls')
     typewriter('''
 You recall the old apothecary near the village well and walk to the ruined building. 
 The path is eerie, lined with crumbling homes and empty streets. 
@@ -132,16 +136,17 @@ With the apothecary's logbook in hand, you weigh your choices carefully.\n(Type 
     if flower_choice == '1':
         add_item_to_inventory("Sylvan Heartflower", 1, 1)
         typewriter("You have picked up the first plant and stashed it away.\n")
-        game_print(f"Added {item_highlight_bold('Sylvan Heartflower')} to your inventory")
+        inv_add_print("Sylvan Heartflower", "Yellow")
         print()
     if flower_choice == '2':
         add_item_to_inventory("Shadowbane Blossom", 1, 0)
         typewriter("You have picked up the second plant and stashed it away.\n")
-        game_print(f"Added {item_highlight_bold('Shadowbane Blossom')} to your inventory")
+        inv_add_print("Shadowbane Blossom", "Yellow")
         print()
 
 
 def level_four():#town hall, resting point, chest for the key, find shortsword
+    os.system('cls')
     typewriter('''After finding your first ingredient, you leave the apothecary and travel onwards to the Town Hall.\nOnce inside you sense a moment of calm, peace and quiet. The walls are standing steady and the windows are still barged.\nThe only way in or out is through the entrance.''')
   
     townh_choice = is_yesno_valid('Do you take this moment to rest up? ')
@@ -151,22 +156,23 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
         player_stats["health"] += 25
         time.sleep(1)
         game_print(f"You have restored 25 health. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
-        print("\nAfter resting for a moment, you look around and", end='')
+        print("\nAfter resting for a moment, you look around and,", end='')
 
     if townh_choice == 'No':
         print('You decide not to rest and look around.\n')
         time.sleep(1)
         print(f"While looking around, you find a {pot_highlight('healing potion')} hidden behind a shelf!\n")
         add_item_to_inventory("Healing Potion", 1, 0)
-        game_print(f"Added {pot_highlight_bold('Healing potion')} to your inventory.")
+        inv_add_print("Healing potion", "Purple")
         print()
         time.sleep(1)
         print("Whilst exploring further,", end='')
-    typewriter(" in the corner, you noticed an unopened chest.")
+    typewriter(" in the corner, you notice an unopened chest and approach it.")
     chest_choice = is_yesno_valid('Do you try opening the chest? ')
     
     if chest_choice == 'No':
         print("You do not try opening the chest.\n ")
+        print("You take a step back, only for the ground beneath you to emit an ominous creak")
     if chest_choice == 'Yes':
         typewriter("You try to lift the lid, but it remains firmly locked.\nThe faint glint of a keyhole suggests there's a way to open it—if only you had the right key.")
         if check_inventory_amount("Rusted Key"):
@@ -175,6 +181,15 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
             if key_confirm == 'Yes':
                 print(f"You succesfully open the chest and find a {item_highlight('Shortsword')} inside!\n")
                 give_player_weapon("Shortsword")
-                game_print(f"Added {item_highlight_bold('Shortsword')} to your inventory.")
+                inv_add_print("Shortsword", "Yellow")
+                print("\nYou secure the weapon from the chest and take a moment to catch your breath.\nBut as you step back, the ground beneath you begins to creak ominously.")
             else:
                 print("You decide not to open the chest after all.\n")
+                print("You take a step back, only for the ground beneath you to emit an ominous creak.")
+
+
+def level_five():
+    os.system('cls')
+    #enter dungeon, check surroundings, move forwards, 
+    print("Without warning, the floor collapses under your feet.\nWith a gasp, you fall into the darkness below, landing with a hard thud in a cold, damp chamber.\nYou're in a dungeon... and there's no going back.")
+    input('lvl 5')

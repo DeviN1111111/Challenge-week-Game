@@ -13,6 +13,13 @@ def typewriter(str):
 def game_print(text: str)-> str:
     print(f"{print_highlight(text)}")
 
+
+def inv_add_print(item: str, colour: str)-> str:
+    if colour == 'Yellow':
+        print(f"\033[1;37mAdded \033[33m{item}\033[1;37m to your inventory\033[0m")
+    elif colour == 'Purple':
+        print(f"\033[1;37mAdded \033[35m{item}\033[1;37m to your inventory\033[0m")
+
 #validators
 def valid_input(prompt: str, total_choices: int)-> str:
     user_input = input(prompt)
@@ -86,7 +93,7 @@ def pot_highlight_bold(text: str):#purple -> bold
     return f"\033[35m{text}\033[1;37m"
 
 
-def print_highlight(text: str):
+def print_highlight(text: str):#white-bold
     return f"\033[1;37m{text}\033[0m"
 
 #combat stats
@@ -119,7 +126,7 @@ def combat(enemy:str):
             if enemy["health"] > 0:
                 typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
             else:
-                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} it died")
+                typewriter(f"{enemy_highlight(enemy_name)} has {hp_highlight('0 health')} it died.")
                 enemy["health"] = enemy_hp_reset
                 return
             if enemy["health"] > 0:    
