@@ -1,6 +1,6 @@
 import random
 
-time_sleep = [0.0001, 0.0002]
+time_sleep = [0.01, 0.08]
 
 weapons = [
     {"name": "Fist", "damage": 10},
@@ -17,8 +17,8 @@ player_stats = {
 enemy_stats = {
     "Zombie": {"damage": 5, "health": 50},
     "Skeleton": {"damage": 12, "health": 60},
-    "Vampire": {"damage": 10, "health": 90},
-    "Crystal Golem": {"damage": 15,"health": 100}
+    "Crystal Golem": {"damage": 20,"health": 175},
+    "Wife": {"damage": 50, "health": 500}
 }
 
 player_inventory = [

@@ -1,14 +1,14 @@
 import time, random, os
+from main import *
 from config import *
-from functions import *
 
 
 def main_menu()->str:
     print('''
-========================================
-        Welcome to placeholder
-        made by Devin & Lucio
-========================================
+====================================================================================='
+                            Welcome to placeholder
+                            made by Devin & Lucio
+====================================================================================='
 In a world overrun by plague and creatures of darkness, your wife lies gravely ill. 
 As a skilled alchemist, you alone have the knowledge to craft a cure,
 but the rare ingredients you need are scattered across a dying, perilous land.
@@ -16,15 +16,36 @@ Armed with potions and desperation, you must venture beyond the safety of your l
 into forgotten ruins, haunted forests, and crumbling villages.
 Time is running out. Will you find the cure before it's too late?
 Or will the horrors of this shattered world consume you?
-========================================
+====================================================================================='
     Enter '1' to start the game.
     Enter '2' to quit.
-========================================''')
-    reset_game()
+=====================================================================================''')
 
 
 def level_one():
+    print('''    Making Choices:
+    Throughout the game, you'll face decisions and challenges where you must choose an option:
     
+    Numbered choices: Some situations will ask you to choose between options. Simply type the number of your choice (eg., 1, 2 or 3).
+    
+    Yes or No: Other situations will ask you to do something and you can answer using "Yes" or "No".
+          
+    Available Commands:
+    Type these commands during the game to perform specific actions.
+    /heal          - Use a healing potion to restore health.
+    
+    /inventory     - Display your current inventory items.
+    
+    /help          - Show this help message with the list of commands.
+
+    /logbook       - Show the description in your logbook
+
+    /quit          - To quit the game :(
+
+    Type a command to execute it. Have fun exploring!
+          ''')
+    input("Enter any key to continue. ")
+    time.sleep(1)
     typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
@@ -35,6 +56,7 @@ A shambling figure emerges from behind a broken cart—its skin gray, eyes lifel
  
 You've read about these creatures, but now you face one, alone.
 Your hands shake as you ready your weapon. It's time to fight. Will your alchemy save you?''')
+    time.sleep(3)
     print()
     combat('Zombie')
     print()
@@ -44,6 +66,7 @@ With your wife's illness in your mind, you push forward.''')
     print()
     add_inventory_value("Damage potion", 3)
     inv_add_print("3 damage potions", "Purple")
+    time.sleep(1)
 
     
 def level_two():
@@ -71,21 +94,30 @@ In the storage room there isn't much of anything. However a large wooden crate s
     print()
     answer = is_yesno_valid("Do you open the crate? ")
     if answer == 'Yes':
-        print('placeholder')
+        typewriter('''As you pry open the crate, the wood creaks loudly. 
+Suddenly, with a burst of dust and decay, the lid flies open and a bony hand shoots out!
+A skeleton, long entombed, rises from the crate, its empty eye sockets glowing with malevolent energy.''')
         combat('Skeleton')
+        typewriter(f'''
+With a final strike, the {enemy_highlight('skeleton')} collapses into dust. 
+You grab the {item_highlight('rusted key')} and quickly exit the bakery, feeling the weight of danger still lurking in the village.
+''')
     elif answer == 'No':
         typewriter(f"There isn't really anything else of use, you leave the bakery with the {item_highlight('rusted key')}.")
 
 
 def smithy():#a new weapon and an encounter
-    typewriter("smithy story dead skeleton new dagger etc")
-    answer = is_yesno_valid("Do you pick up the dagger from the Skeleton? ")
+    typewriter(f'''The smithy is eerily quiet, filled with the scent of rust and decay. Broken tools scatter the floor, and the once roaring forge now stands cold. 
+Among the debris, a glint catches your eye—a {item_highlight('Dagger')} clutched by a skeletal hand, still lying near the anvil.''')
+    answer = is_yesno_valid("Do you pick up the dagger from the skeleton? ")
     if answer == 'Yes':
         give_player_weapon("Dagger")
+        print()
         inv_add_print("Dagger", "Yellow")
+        print()
         typewriter("As you pick up the weapon, the body starts moving...")
         time.sleep(1)
-        typewriter("The skeleton starts attacking!")
+        typewriter("The skeleton starts attacking!\n")
         combat("Skeleton")
         typewriter("After fending off the skeleton, you head back outside")
         print(end='')
@@ -105,29 +137,32 @@ There must be some ingredients you can use inside.''')
     typewriter('''As you enter the old ruined apothecary you have a look around. 
 Two plants catch your eye, but which one do you need?
 You decide to search for clues.''')
-    print('''Where do you want to look?
+    print('''
+Where do you want to look?
 1. The closet
 2. The chest
-3. The drawers''')
+3. The drawers
+''')
     room_check = True
     while room_check:
         room_choice = is_number_valid("Enter your choice: ", 3)
         if room_choice == '1':#closet
-            print('You find nothing')
+            typewriter('You open the creaky closet door to find dusty old cloaks and broken bottles, but nothing of use.')
         if room_choice == '2':#chest
-            print('You find nothing')
+            typewriter('The chest opens with a groan, revealing only crumbling parchment and useless trinkets long forgotten')
         if room_choice == '3':#drawers
             room_check = False
-            typewriter("As you sift through the clutter in the dim light of the apothecary's hut,\nyour fingers brush against a worn notebook, its pages yellowed with age,\nrevealing the secrets of healing and the dangers lurking within the herbs.\n")
-            add_desc_to_logbook('''The plant with soft, vibrant leaves emits a faint, warm glow in the sunlight,
-hinting at its restorative properties.
-In contrast, the one with dark, twisted stems and jagged edges thrives in the shadows;
-its appearance is alluring but deceptive, bringing misfortune to the unwary.''')
-    typewriter('''You return to the room where you first spotted the plants.
-               
-1. The first plant stands tall with vibrant green leaves and soft blue petals,\nemanating a sweet aroma that hints at its healing properties.
+            typewriter("You pull the drawers open, one after another, each filled with dust and debris until... something catches your eye,\nyour fingers brush against a worn notebook, its pages yellowed with age,\nrevealing the secrets of healing and the dangers lurking within the herbs.\n")
+            add_desc_to_logbook('''The plant with soft, vibrant leaves emits a faint glow when touched,
+hinting at its life-giving properties.
 
-2. The second plant sprawls low to the ground,\nits twisted gray leaves and dark flowers exuding an unsettling energy.
+The one with twisted stems and brittle leaves, though alluring,
+is often used in poisons and dark rituals, dangerous to the unskilled.''')
+    typewriter('''You return to the room where you first spotted the plants.
+
+1. The first plant stands tall with thick, waxy leaves and green petals. It has a strong, earthy scent.
+
+2. The second plant sprawls low, its thin, brittle stems bearing dark purple flowers. The air around it feels strangely cool.
 
 With the apothecary's logbook in hand, you weigh your choices carefully.\n(Type /logbook to read)''')
     flower_choice = is_number_valid("Enter your choice: ", 2)
@@ -152,7 +187,7 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
         print('You decide to take a moment to rest up.\n')
         player_stats["health"] += 35
         time.sleep(1)
-        game_print(f"You have restored 35 health. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
+        game_print(f"You have restored {hp_highlight_bold("35 health")}. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
         print("\nAfter resting for a moment, you look around and,", end='')
         if player_stats["health"] >= 100:
             player_stats["health"] = 100
@@ -177,20 +212,23 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
         if check_inventory_amount("Rusted Key"):
             key_confirm = is_yesno_valid("You have a key, do you want try opening the chest with it? ")
             time.sleep(1)
+        
             if key_confirm == 'Yes':
                 print(f"You succesfully open the chest and find a {item_highlight('Shortsword')} inside!\n")
                 give_player_weapon("Shortsword")
                 inv_add_print("Shortsword", "Yellow")
-                print("\nYou secure the weapon from the chest and take a moment to catch your breath.\nBut as you step back, the ground beneath you begins to creak ominously.")
+                print("\nYou secure the weapon from the chest and take a moment to catch your breath.\nBut as you step back, the ground beneath you begins to creak ominously.\n")
             else:
                 print("You decide not to open the chest after all.\n")
-                print("You take a step back, only for the ground beneath you to emit an ominous creak.")
-
+                print("You take a step back, only for the ground beneath you to emit an ominous creak.\n")
+        else:
+            print("But as you step back, the ground beneath you begins to creak ominously.\n")
 
 def level_five():
     #enter dungeon, check surroundings, find more healing potions or upgrade dmg with new gloves, merge at golem, either fight or stealth it. 
     print("Without warning, the floor collapses under your feet.\nWith a gasp, you fall into the darkness below, landing with a hard thud in a cold, damp chamber.\nYou're in a dungeon... and there's no going back.")
-    typewriter('''You dust yourselff off and find yourself at a crossroads,
+    typewriter('''
+You dust yourselff off and find yourself at a crossroads,
 two hallways stand right before you.
 1. The left passageway seems slightly more open, its walls marked with faint scratches and worn stone.             
 2. The right passageway is narrower, with jagged stones lining the floor and an eerie silence hanging in the air.
@@ -212,22 +250,34 @@ two hallways stand right before you.
             upgrade_weapon(5)
         if glove_pickup == 'No':
             print("You leave the gloves on the ground and continue down the hallway.")
-    typewriter("The hallways merge into a vast open chamber, the air thick with ancient dust. In the center stands a massive golem,\nits body shimmering with the same crystalline glow as the shard you seek.\nThis... thing guards your next ingredient")
+    typewriter("The hallways merge into a vast open chamber, the air thick with ancient dust. In the center stands a massive golem,\nits body shimmering with the same crystalline glow as the shard you seek.\nThis... thing guards your next ingredient.\n")
     time.sleep(1)
-    typewriter('''As you approach the chamber, you notice that the creature's attention is briefly diverted. 
-1. You can either attempt to quietly slip past it and seize the shard or,
+    typewriter('''As you approach the chamber, you notice that the creature has not spotted you yet. 
+1. You can either attempt to quietly slip past it and seize the shard from behind or,
 2. Prepare for a direct confrontation with this formidable guardian. 
 The choice is yours.''')
     golem_choice = is_number_valid("Enter your choice here: ", 2)
     if golem_choice == '1': #stealth
-        stealth(3)
-        print('you successfully sneak up to the golem and rip off the mf gem, killing it')
+        sneak = stealth(3)
+        if sneak:
+            typewriter('''You move slowly, each step carefully placed to avoid making noise. 
+With your heart pounding in your chest, you get closer, the Glimmering Shard within reach. 
+
+Holding your breath, you make your move, swiftly grabbing the shard from its back. 
+The golem freezes for a moment, then crumbles into lifeless stone as the crystal leaves its body.''')
+            print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
+            add_item_to_inventory("Glimmering Shard", 1, 1)
+            inv_add_print("Glimmering Shard", 'Yellow')
+        elif not sneak:
+            print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
+            add_item_to_inventory("Glimmering Shard", 1, 1)
+            inv_add_print("Glimmering Shard", 'Yellow')
     if golem_choice == '2': #combat
         print(f"You decide to fight the {enemy_highlight("Crystal Golem")} head on.")
         combat("Crystal Golem")
+        print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
         add_item_to_inventory("Glimmering Shard", 1, 1)
         inv_add_print("Glimmering Shard", 'Yellow')
-    print('now that the golem is defeated you pick up 2nd INGREDIENT and continue')
     print("you find back exit, you enter the forest")
 
 
@@ -288,10 +338,12 @@ Combine them with care, or face endless night.''')
           choices += 1
           print("you enter the essence")
           ingredient_order.append("Mysterious Essence")
+    print(ingredient_order)
 
     if ingredient_order[0] == "Sylvan Heartflower" and ingredient_order[1] == "Glimmering Shard" and ingredient_order[2] == "Mysterious Essence":
         print('you win!!!!')
     else:
         print('your potion failed')#DOESNT WORK
+    print(ingredient_order)
 
     

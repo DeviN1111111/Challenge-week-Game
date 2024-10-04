@@ -1,10 +1,11 @@
-from functions import *
+from main import *
 from levels import *
 
 
-def gameloop():
+def game_loop():
 
     while True:
+        reset_game()
         main_menu()
         menu_choice = is_number_valid("Enter your choice here: ", 2)
         if menu_choice == '2':
@@ -18,20 +19,20 @@ def gameloop():
             name = is_name_valid("Enter your name: ")
             typewriter(f"Welcome {name}.")
             time.sleep(1)
-            typewriter('''
-placeholder intro text''')#hier moet nog n kleine intro komen die verdiept op de intro text van de main menu en de commands uit legt
+            typewriter
             level_one()
             time.sleep(1)
             level_two()
+            time.sleep(1)
             level_three()
+            time.sleep(1)
             level_four()
+            time.sleep(1)
             level_five()
+            time.sleep(1)
             level_six()
+            time.sleep(1)
             level_seven()
             
-    
-    
-            
-        
 
-gameloop()
+game_loop()
