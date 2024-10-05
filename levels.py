@@ -44,29 +44,29 @@ def level_one():
 
     Type a command to execute it. Have fun exploring!
           ''')
-    input("Enter any key to continue. ")
-    time.sleep(1)
-    typewriter('''
+    start_game = is_number_valid("Enter '1' to continue." , 1)
+    if start_game == '1':
+        time.sleep(1)
+        typewriter('''
 As you step out of your lab, the air is thick with decay, and the once-familiar village now feels like a stranger.
 The sky, a bleak gray, hangs over crumbling houses and the echo of distant groans.
 With your satchel of alchemical supplies strapped tight, you head towards the town square, knowing the first ingredient is found somewhere within the village.
-
 But you don't make it far before a chilling sound stops you in your tracks.
 A shambling figure emerges from behind a broken cart—its skin gray, eyes lifeless. It stumbles toward you, hunger in its eyes.
- 
+
 You've read about these creatures, but now you face one, alone.
 Your hands shake as you ready your weapon. It's time to fight. Will your alchemy save you?''')
-    time.sleep(3)
-    print()
-    combat('Zombie')
-    print()
-    typewriter(f'''With the {enemy_highlight('zombie')} defeated, a grim realization settles in—there are more dangers ahead,
+        time.sleep(3)
+        print()
+        combat('Zombie')
+        print()
+        typewriter(f'''With the {enemy_highlight('zombie')} defeated, a grim realization settles in—there are more dangers ahead,
 to prepare, you grab {pot_highlight('3 Damage potions')} from your pouch and attach them to your belt for easy access.
 With your wife's illness in your mind, you push forward.''')
-    print()
-    add_inventory_value("Damage potion", 3)
-    inv_add_print("3 damage potions", "Purple")
-    time.sleep(1)
+        print()
+        add_inventory_value("Damage potion", 3)
+        inv_add_print("3 damage potions", "Purple")
+        time.sleep(1)
 
     
 def level_two():
