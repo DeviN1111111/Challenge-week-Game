@@ -190,7 +190,7 @@ def combat(enemy:str):
                             typewriter(f"Your {pot_highlight('damage potion')} hit the {enemy_highlight(enemy_name)} right on! it did {dmg_highlight(value_of_damage_potion)} {dmg_highlight('damage')}")
                             typewriter(f"{enemy_highlight(enemy_name)} {hp_highlight('health')} is now {hp_highlight(enemy['health'])}.")
                     else:
-                        typewriter(f"You decided not to use a {pot_highlight("damage potion")}.")
+                        typewriter(f"You decided not to use a {pot_highlight('damage potion')}.")
 
     else:
         typewriter(f"ERROR Enemy typo of je begint je gevecht met 0 of minder HP")
@@ -237,13 +237,13 @@ def use_healing_potion():
                 if player_stats["health"] <= 50: #Healing does 50 this makes sure u dont heal over 100 health
                     item["amount"] -= 1
                     player_stats["health"] += item["value"]
-                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats["health"])} health, and you have {item['amount']} healing potions left.")
-                elif player_stats["health"] >= 50 and player_stats["health"] < 100:
+                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats['health'])} health, and you have {item['amount']} healing potions left.")
+                elif player_stats["health"] >= 50 and player_stats['health'] < 100:
                     item["amount"] -= 1
                     player_stats["health"] = 100 #If you are over 50 hp you would heal to over 100 hp this makes sure u only heal to 100 
-                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats["health"])} health, and you have {item['amount']} healing potions left.")
+                    typewriter(f"You healed from {hp_highlight(old_hp)} to {hp_highlight(player_stats['health'])} health, and you have {item['amount']} healing potions left.")
                 else:
-                    typewriter(f"You are already full health! you have {item['amount']} {pot_highlight("healing potions")} left.")
+                    typewriter(f"You are already full health! you have {item['amount']} {pot_highlight('healing potion')} left.")
             else:
                 typewriter("You don't have any healing potions.")
 
@@ -523,7 +523,7 @@ def level_four():#town hall, resting point, chest for the key, find shortsword
         print('You decide to take a moment to rest up.\n')
         player_stats["health"] += 35
         time.sleep(1)
-        game_print(f"You have restored {hp_highlight_bold("35 health")}. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
+        game_print(f"You have restored {hp_highlight_bold('35 health')}. (If you want to heal using a {pot_highlight_bold('healing potion')}, use /heal)")
         print("\nAfter resting for a moment, you look around and,", end='')
         if player_stats["health"] >= 100:
             player_stats["health"] = 100
@@ -601,17 +601,17 @@ With your heart pounding in your chest, you get closer, the Glimmering Shard wit
 
 Holding your breath, you make your move, swiftly grabbing the shard from its back. 
 The golem freezes for a moment, then crumbles into lifeless stone as the crystal leaves its body.''')
-            print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
-            add_item_to_inventory("Glimmering Shard", 1, 1)
+            print(f"You succesfully grab the {item_highlight('Glimmering Shard')}!")
+            add_item_to_inventory('Glimmering Shard', 1, 1)
             inv_add_print("Glimmering Shard", 'Yellow')
         elif not sneak:
-            print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
+            print(f"You succesfully grab the {item_highlight('Glimmering Shard')}!")
             add_item_to_inventory("Glimmering Shard", 1, 1)
             inv_add_print("Glimmering Shard", 'Yellow')
     if golem_choice == '2': #combat
-        print(f"You decide to fight the {enemy_highlight("Crystal Golem")} head on.")
+        print(f"You decide to fight the {enemy_highlight('Crystal Golem')} head on.")
         combat("Crystal Golem")
-        print(f"You succesfully grab the {item_highlight("Glimmering Shard")}!")
+        print(f"You succesfully grab the {item_highlight('Glimmering Shard')}!")
         add_item_to_inventory("Glimmering Shard", 1, 1)
         inv_add_print("Glimmering Shard", 'Yellow')
     typewriter("As you leave the dungeon, a chill fills the air, and you step into the shadowy forest,\nthe thick canopy above blocking out most of the light, leaving you to navigate through the gloom.")
@@ -627,10 +627,10 @@ The creature's presence sends a jolt of fear through you, reminding you that dan
     print('1. Do you fight the zombie? or\n2. Do you run away?')
     fight_or_flight = is_number_valid("Enter your choice here: ", 2)
     if fight_or_flight == '1':#combat
-        print(f'You decide to face the {enemy_highlight('zombie')} head on.')
+        print(f'You decide to face the {enemy_highlight("zombie")} head on.')
         combat('Zombie')
     if fight_or_flight == '2':#run away
-        print(f'You decide to run away from the {enemy_highlight('zombie')}.')
+        print(f'You decide to run away from the {enemy_highlight("zombie")}.')
     typewriter("You make your way to the herbalist's hut, the path winding through the dense underbrush.\nThe air grows thick with the scent of damp earth and moss, and the atmosphere feels charged with anticipation.")
     #npc interaction
     print("You enter the hut, and the herbalist greets you with a knowing smile.")
@@ -641,10 +641,10 @@ The creature's presence sends a jolt of fear through you, reminding you that dan
     while True:
         riddle_choice = is_number_valid("Enter your choice here: ", 3)
         if riddle_choice == '1':
-            typewriter(f"The herbalist shakes their head, saying, 'Wrong answer {player_stats["name"]}. Give it another try.'")
-        if riddle_choice == '2':
-            typewriter(f"The herbalist shakes their head, saying, 'Wrong answer {player_stats["name"]}. Give it another try.'")
+            typewriter(f"The herbalist shakes their head, saying, 'Wrong answer {player_stats['name']}. Give it another try.'")
         if riddle_choice == '3':
+            typewriter(f"The herbalist shakes their head, saying, 'Wrong answer {player_stats['name']}. Give it another try.'")
+        if riddle_choice == '2':
             typewriter(f"The herbalist smiles and says, 'Correct! You have proven your wisdom. Here is the {item_highlight('Mysterious Essence')} you seek.'")
             add_item_to_inventory("Mysterious Essence", 1, 1)
             print()
@@ -665,7 +665,7 @@ Combine them with care, or face endless night.
 ''')
     #sylvan heartflower -> glimmering shard -> mysterious essence
     typewriter("You start brewing the potion, but you must decide the order in which to enter the ingredients.")
-    print(f'1. {item_highlight('Sylvan Heartflower')}.\n2. {item_highlight("Glimmering Shard")}.\n3. {item_highlight("Mysterious Essence")}.')
+    print(f'1. {item_highlight("Sylvan Heartflower")}.\n2. {item_highlight("Glimmering Shard")}.\n3. {item_highlight("Mysterious Essence")}.')
     choices = 0
     while choices < 3:
       ingredient_choice = is_number_valid("Enter your choice here: ", 3)

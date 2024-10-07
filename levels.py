@@ -301,9 +301,9 @@ def level_six():#walk through forest, find zombie, run or fight, end up at herba
         riddle_choice = is_number_valid("Enter your choice here: ", 3)
         if riddle_choice == '1':
             print("wrong answer, try again")
-        if riddle_choice == '2':
-            print("wrong answer, try again")
         if riddle_choice == '3':
+            print("wrong answer, try again")
+        if riddle_choice == '2':
             print("correct!")
             add_item_to_inventory("Mysterious Essence", 1, 1)
             inv_add_print("Mysterious Essence", 'Yellow')
